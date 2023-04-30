@@ -8,16 +8,21 @@ using TMPro;
 
 public class BookReader : MonoBehaviour
 {
-    public Transform contentWindow;
-    public GameObject recallTextObject;
+    [SerializeField] private string bookFileName;
+
+    private TextMeshProUGUI _text;
+    private string fileName, bookFilePath;
     void Start()
     {
-        string readFromFilePath = Application.streamingAssetsPath + "/Books" + "idiot" + ".txt";
-        List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
+        _text = GetComponent<TextMeshProUGUI>();
+        
+        fileName = bookFileName;
+        bookFilePath = Application.dataPath + "/Books/" + bookFileName;
+        
+        List<string> fileLines = File.ReadAllLines(bookFilePath).ToList();
         foreach (string line in fileLines)
         {
-            Instantiate(recallTextObject, contentWindow);
-            recallTextObject.GetComponent<Text>().text = line;
+            _text.text += line;
         }
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 753178212896018730}
   - component: {fileID: 753178212896018732}
+  - component: {fileID: 8184625106579721743}
   - component: {fileID: 753178212896018731}
   m_Layer: 0
   m_Name: BookIdiot
@@ -46,6 +47,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753178212896018729}
   m_CullTransparentMesh: 1
+--- !u!114 &8184625106579721743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753178212896018729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8923b39c08d6ea342bf1a2ad63b94ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bookFileName: 
 --- !u!114 &753178212896018731
 MonoBehaviour:
   m_ObjectHideFlags: 0
