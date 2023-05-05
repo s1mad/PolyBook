@@ -5,16 +5,15 @@ using TMPro;
 
 public class PagesCount : MonoBehaviour
 {
-    public GameObject scriptObject, textObject;
-    private PageSwitcher pageSwitcher;
+    [SerializeField] private TextMeshProUGUI bookText;
+    public GameObject  textObject;
     private TextMeshProUGUI counter;
-    void Start()
+    private void Start()
     {
-        pageSwitcher = scriptObject.GetComponent<PageSwitcher>();
         counter = textObject.GetComponent<TextMeshProUGUI>();
     }
-    void Update() 
+    private void Update() 
     {
-        counter.text = pageSwitcher.currentPage.ToString() + "/" + pageSwitcher.totalPage.ToString();
+        counter.text = bookText.pageToDisplay + "/" + bookText.textInfo.pageCount;
     }
 }

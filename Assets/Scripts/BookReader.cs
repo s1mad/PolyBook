@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 using TMPro;
@@ -14,23 +14,35 @@ public class BookReader : MonoBehaviour
 
     private TextMeshProUGUI textName;
     private TextMeshProUGUI _text;
-    private string fileName, bookFilePath;
-    
-    void Start()
+
+    private string bookFilePath;
+
+    public static Action<int> getPages;
+
+    private void Awake()
     {
         _text = GetComponent<TextMeshProUGUI>();
         textName = textNameObject.GetComponent<TextMeshProUGUI>();
 
-        fileName = bookFileName;
         bookFilePath = Application.dataPath + "/Books/" + bookFileName;
         
-        List<string> fileLines = File.ReadAllLines(bookFilePath).ToList();
+        var fileLines = File.ReadAllLines(bookFilePath).ToList();
 
         textName.text = _name;
+        var allText = "";
 
-        foreach (string line in fileLines)
+        foreach (var line in fileLines)
         {
-            _text.text += line;
+            allText += line;
         }
+        
+        _text.SetText(allText);
+    }
+
+    private void Update()
+    {
+        getPages?.Invoke(_text.textInfo.pageCount);
+        if(_text.textInfo.pageCount > 0)
+            Destroy(this);
     }
 }

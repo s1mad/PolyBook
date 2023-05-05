@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,26 +11,30 @@ public class PageSwitcher : MonoBehaviour
 {
     private TextMeshProUGUI _text;
     public int currentPage = 1, totalPage;
-    void Start()
+    private void Start()
     {
         _text = GetComponent<TextMeshProUGUI>();
-        totalPage = _text.textInfo.pageCount;
+    }
+
+    private void OnEnable() => BookReader.getPages += SetTotalPages;
+
+    private void OnDisable() => BookReader.getPages -= SetTotalPages;
+
+    private void SetTotalPages(int pageCount)
+    {
+        totalPage = pageCount;
     }
 
     public void nextPage()
     {
-        if (currentPage < totalPage)
-        {
-            _text.pageToDisplay++;
-            currentPage++;
-        }
+        if (currentPage >= totalPage) return;
+        _text.pageToDisplay++;
+        currentPage++;
     }
     public void previousPage()
     {
-        if (currentPage > 1)
-        {   
-            _text.pageToDisplay--;
-            currentPage--;
-        }
+        if (currentPage <= 1) return;
+        _text.pageToDisplay--;
+        currentPage--;
     }
 }
