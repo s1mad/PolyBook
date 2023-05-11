@@ -5,15 +5,24 @@ using UnityEngine;
 public class TimerNotificationEyeCharging : MonoBehaviour
 {
     [SerializeField] private GameObject notificationPanel;
-    public int timeNotification = 15*60;
+    [SerializeField] private SettingsReader settingsReader;
+    private int timeNotification;
+    private Coroutine notificationCoroutine;
     void Start()
     {
-        StartCoroutine(notificationTimer(timeNotification));
+        updateNotificationTimer();
     }
 
     IEnumerator notificationTimer(int timeNotification)
     {
         yield return new WaitForSeconds(timeNotification);
         notificationPanel.SetActive(true);
+    }
+    public void updateNotificationTimer()
+    {
+        if (notificationCoroutine != null)
+            StopCoroutine(notificationCoroutine);
+        timeNotification = settingsReader.timeNotification;
+        StartCoroutine(notificationTimer(timeNotification));
     }
 }
