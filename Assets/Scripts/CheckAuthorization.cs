@@ -6,12 +6,18 @@ using TMPro;
 
 public class CheckAuthorization : MonoBehaviour
 {
+    [SerializeField] GameObject authorizationPanel, loginPanel, restorePasswordPanel;
     [SerializeField] TMP_InputField[] inputField;
-    [SerializeField] GameObject currentPanel, activePanel;
     [SerializeField] TMP_InputField[] passwordInputField;
 
     public void CheckInputFieldClick()
     {
+        if (inputField.Length == 1 && !string.IsNullOrEmpty(inputField[0].text))
+        {
+            restorePasswordPanel.SetActive(false);
+            loginPanel.SetActive(true);
+            return;
+        }
         bool isFill = true;
         foreach (TMP_InputField inputField in inputField)
         {
@@ -23,8 +29,9 @@ public class CheckAuthorization : MonoBehaviour
         }
         if (isFill && CheckPasswordClick())
         {
-            currentPanel.SetActive(false);
-            activePanel.SetActive(true);
+            authorizationPanel.SetActive(false);
+            foreach (TMP_InputField inputField in inputField)
+                inputField.text = "";
         }
     }
 
