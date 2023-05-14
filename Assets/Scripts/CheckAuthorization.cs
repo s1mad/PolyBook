@@ -6,7 +6,7 @@ using TMPro;
 
 public class CheckAuthorization : MonoBehaviour
 {
-    [SerializeField] GameObject authorizationPanel, loginPanel, restorePasswordPanel;
+    [SerializeField] GameObject authorizationPanel, loginPanel, restorePasswordPanel, RegistrationPanel, ChoiceLoginOrRegistrarion, ButtonBack;
     [SerializeField] TMP_InputField[] inputField;
     [SerializeField] TMP_InputField[] passwordInputField;
 
@@ -30,6 +30,11 @@ public class CheckAuthorization : MonoBehaviour
         if (isFill && CheckPasswordClick())
         {
             authorizationPanel.SetActive(false);
+            loginPanel.SetActive(false);
+            restorePasswordPanel.SetActive(false);
+            RegistrationPanel.SetActive(false);
+            ButtonBack.SetActive(false);
+            ChoiceLoginOrRegistrarion.SetActive(true);
             foreach (TMP_InputField inputField in inputField)
                 inputField.text = "";
         }
