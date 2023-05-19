@@ -24,19 +24,11 @@ public class BookReader : MonoBehaviour
         _text = GetComponent<TextMeshProUGUI>();
         textName = textNameObject.GetComponent<TextMeshProUGUI>();
 
-        bookFilePath = Application.dataPath + "/Books/" + bookFileName;
-        
-        var fileLines = File.ReadAllLines(bookFilePath).ToList();
+        StartCoroutine(LoadBook());
 
+        //bookFilePath = Application.streamingAssetsPath + "/" + bookFileName;
+        
         textName.text = _name;
-        var allText = "";
-
-        foreach (var line in fileLines)
-        {
-            allText += line;
-        }
-        
-        _text.SetText(allText);
     }
 
     private void Update()
@@ -44,5 +36,34 @@ public class BookReader : MonoBehaviour
         getPages?.Invoke(_text.textInfo.pageCount);
         if(_text.textInfo.pageCount > 0)
             Destroy(this);
+    }
+    
+    IEnumerator LoadBook()
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, bookFileName);
+        if (filePath.Contains("://"))
+        {
+            //Android || iOS
+            UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
+            yield return www.SendWebRequest();
+            if (!string.IsNullOrEmpty(www.error))
+            {
+                Debug.LogError("Error while downloading book: " + www.error);
+                yield break;
+            }
+            byte[] bytes = www.downloadHandler.data;
+            
+            string allText = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+
+            _text.SetText(allText);
+        }
+        else
+        {
+            //PC
+            string[] fileLines = File.ReadAllLines(filePath);
+            string allText = string.Join("", fileLines);
+            
+            _text.SetText(allText);
+        }
     }
 }
