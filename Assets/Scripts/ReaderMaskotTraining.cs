@@ -7,6 +7,7 @@ public class ReaderMaskotTraining : MonoBehaviour
     [SerializeField] private GameObject _maskotTraining;
     [SerializeField] private GameObject _text1;
     [SerializeField] private GameObject _text2;
+    [SerializeField] private FadeToScript fadeToScript;
     private int _selectedText = 1;
 
     public void MaskotTraining()
@@ -19,7 +20,7 @@ public class ReaderMaskotTraining : MonoBehaviour
                 _text1.SetActive(false);
                 break;
             default:
-                _maskotTraining.SetActive(false);
+                fadeToScript.StartFade();
                 break;
         }
     }

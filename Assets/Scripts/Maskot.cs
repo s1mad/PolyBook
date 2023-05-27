@@ -16,6 +16,7 @@ public class Maskot : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private GameObject _text2;
     [SerializeField] private GameObject _text3;
+    [SerializeField] private FadeToScript fadeToScript;
     private float _fadeDuration = 1.5f;
     private float _targetAlpha = 0f;
 
@@ -29,7 +30,6 @@ public class Maskot : MonoBehaviour
     {
         _choicePanel.SetActive(false);
         _noPanel.SetActive(true);
-        StartCoroutine(FadeTo(_targetAlpha));
         StartCoroutine(SetActiveMaskotTraining());
     }
     public void Scene1_YesButton()
@@ -51,7 +51,7 @@ public class Maskot : MonoBehaviour
     private IEnumerator SetActiveMaskotTraining()
     {
         yield return new WaitForSeconds(3f);
-        MaskotTraining.SetActive(false);
+        fadeToScript.StartFade();
     }
 
     private IEnumerator FadeTo(float targetAlpha)
